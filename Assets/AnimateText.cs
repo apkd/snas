@@ -12,28 +12,31 @@ public sealed class AnimateText : MonoBehaviour
     [S] float minWait = 0.05f;
     [S] float maxWait = 0.1f;
 
+    Color colorVisible;
+
     void Awake()
-        => text = GetComponent<TMP_Text>();
+    {
+        text = GetComponent<TMP_Text>();
+        colorVisible = text.color;
+    }
 
     void OnEnable()
         => StartCoroutine(AnimateCoroutine());
 
     IEnumerator AnimateCoroutine()
     {
-        text.ForceMeshUpdate();
-
-        TMP_TextInfo textInfo = text.textInfo;
         int currentCharacter = 0;
 
-        var colorVisible = text.color;
         text.color = new Color32(255, 255, 255, 0);
         text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
 
         yield return new WaitForSeconds(0.25f);
 
-        while (enabled)
+        int characterCount = text.textInfo.characterCount;
+
+        while (currentCharacter < text.textInfo.characterCount)
         {
-            int characterCount = textInfo.characterCount;
+            var textInfo = text.textInfo;
 
             if (characterCount == 0)
             {
@@ -59,7 +62,7 @@ public sealed class AnimateText : MonoBehaviour
                 position: default
             );
 
-            currentCharacter = (currentCharacter + 1) % characterCount;
+            currentCharacter += 1;
 
             yield return new WaitForSeconds(Random.Range(minWait, maxWait));
         }
@@ -67,8 +70,8 @@ public sealed class AnimateText : MonoBehaviour
 
     public void SetNewText(string value)
     {
-        text.text = value;
-        text.color = new Color32(255, 255, 255, 0);
-        text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+        text.SetText(value);
+        StopAllCoroutines();
+        StartCoroutine(AnimateCoroutine());
     }
 }

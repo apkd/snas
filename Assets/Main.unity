@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &278035211
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 278035213}
+  - component: {fileID: 278035212}
+  m_Layer: 0
+  m_Name: Twitch Bot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &278035212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278035211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274f71539d9e3004588db9b662ed4477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _channelToConnectTo: awem
+  text: {fileID: 2121699530}
+--- !u!4 &278035213
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278035211}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &465096327
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,31 +374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be76e5f14cfee674cb30b491fb72b09b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boost: 3.5
-  positionLerpTime: 0.2
-  mouseSensitivityCurve:
-    m_Curve:
-    - time: 0
-      value: 0.5
-      inSlope: 0
-      outSlope: 5
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - time: 1
-      value: 2.5
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  rotationLerpTime: 0.01
-  invertY: 0
 --- !u!20 &1687258584
 Camera:
   m_ObjectHideFlags: 0
@@ -501,30 +521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "NoFap: 11 Tips to Keep Your Hands from Going Down There\r\n<size=16>July
-    17, 2020 by Nyazi\r</size>\n<size=24>Gentlemen! I Hope You All all are Doing
-    Good. Before Starting today\u2019s Topic I want to Divert your attention towards
-    one of the Recent articles That I\u2019ve Written. It\u2019s a series basically
-    where I\u2019ve Done Style Breakdown. Check out the Latest Breakdown Here: Guys
-    With Good Style: Alex Costa (9 Takeaways for All of Us). Feel Free to Suggest
-    to me Your Favourite Style Guru or Somebody Who You think has Great Style. And
-    I try my best to Break his Style as well, providing you with the Essential Tips
-    to Be Like Him. BTW, Have you Ever Heard of NoFap?\r</size>\n\r\nAccording to
-    Google:\r\n<size=24>\u201CFapFapFap is the Sound you make When you are Masturbating.
-    When You Decide to Give Up on Masturbation and Adopt to a Healthy Lifestyle,
-    You can it, \u201CNoFap\u201D\r</size>\n\r\nBut Before Digging into the NoFap
-    Tips on How can You Actually Control yourself from Quitting Such an Addictive
-    Thing, I want to Expose You All to some of the Benefits that Come to you when
-    you Choose Not to FapFapFap.\r\n\nBenefits of NoFap:\r<size=16>\r\n    Increased
-    Levels of Confidence\r\n    Lower Levels of Stress\r\n    Increase in the Willpower\r\n   
-    More Happiness\r\n    Higher Energy Levels\r\n    Improved Sperm Quality\r\n   
-    You are gonna end Up getting More Work done by the End of the Day\r\n    More
-    Stamina\r</size>\n\r\nWith that Being Said, Let\u2019s Move on towards the Topic
-    of the Day. Gentlemen! We are about to Disclose some of the tips that I\u2019ve
-    Found after Doing My research. In My Opinion, If You Do These 11 Things that
-    I am about to talk about Just within a Minute, You are gonna slowly but Gradually
-    end up leaving Your Habit of Faping. So without Any Further Ado, Let\u2019s get
-    straight into the Topic. Shall we?"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
