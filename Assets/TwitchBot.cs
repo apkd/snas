@@ -29,7 +29,23 @@ public sealed class TwitchBot : MonoBehaviour
             channel: Secrets.TWITCH_USERNAME
         );
 
-        Client.OnError += (sender, args) => Debug.LogException(args.Exception);
+        Client.OnError
+            += (sender, args) => Debug.LogException(args.Exception, this);
+
+        Client.OnIncorrectLogin
+            += (sender, args) => Debug.LogException(args.Exception, this);
+
+        Client.OnConnectionError
+            += (sender, args) => Debug.LogError(args.Error.Message, this);
+
+        Client.OnLog
+            += (sender, args) => Debug.Log(args.Data, this);
+
+        Client.OnDisconnected
+            += (sender, args) => Debug.Log("Disconnected", this);
+
+        Client.OnReconnected
+            += (sender, args) => Debug.Log("Reconnected", this);
 
         Client.OnConnected += (sender, args) =>
         {
