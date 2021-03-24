@@ -75,15 +75,7 @@ public sealed class AnimateText : MonoBehaviour
             }
             else
             {
-                var gameObject = new GameObject("One shot audio");
-                gameObject.hideFlags = HideFlags.HideAndDontSave;
-                var audioSource = (AudioSource) gameObject.AddComponent(typeof (AudioSource));
-                audioSource.clip = audioClip;
-                audioSource.spatialBlend = 1f;
-                audioSource.volume = 1f;
-                audioSource.Play();
-                audioSource.pitch = pitchShiftCurve.Evaluate(Random.value);
-                Destroy(gameObject, audioClip.length * (Time.timeScale < 0.1f ? 0.01f : Time.timeScale));
+                PlayAudio(audioClip, pitchShiftCurve.Evaluate(Random.value));
             }
 
             yield return new WaitForSeconds(Random.Range(minWait, maxWait));
@@ -92,10 +84,28 @@ public sealed class AnimateText : MonoBehaviour
         }
     }
 
+    static void PlayAudio(AudioClip audioClip, float pitch)
+    {
+        var gameObject = new GameObject("One shot audio") { hideFlags = HideFlags.HideAndDontSave };
+        var audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.clip = audioClip;
+        audioSource.spatialBlend = 1f;
+        audioSource.volume = 1f;
+        audioSource.pitch = pitch;
+        audioSource.Play();
+        Destroy(gameObject, audioClip.length * (Time.timeScale < 0.1f ? 0.01f : Time.timeScale));
+    }
+
     public void AnimateNewText(string value)
     {
         text.SetText(value);
         StopAllCoroutines();
         StartCoroutine(AnimateCoroutine());
+    }
+
+    public void StopAnimating()
+    {
+        text.SetText("");
+        StopAllCoroutines();
     }
 }

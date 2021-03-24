@@ -9,6 +9,7 @@ using S = UnityEngine.SerializeField;
 public sealed class TwitchBot : MonoBehaviour
 {
     [S] AnimateText text;
+    [S] ChatMenu chatMenu;
 
     [S] int textCount = 5;
 
@@ -57,6 +58,7 @@ public sealed class TwitchBot : MonoBehaviour
             );
 
             texts.Enqueue(message);
+            chatMenu.SetLines(texts.ToArray());
         };
 
         Client.Connect();
@@ -67,14 +69,14 @@ public sealed class TwitchBot : MonoBehaviour
         Client.Disconnect();
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Client.SendMessage(
-                channel: Secrets.TWITCH_USERNAME,
-                message: "I pressed the space key within Unity."
-            );
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Space))
+    //     {
+    //         Client.SendMessage(
+    //             channel: Secrets.TWITCH_USERNAME,
+    //             message: "I pressed the space key within Unity."
+    //         );
+    //     }
+    // }
 }
