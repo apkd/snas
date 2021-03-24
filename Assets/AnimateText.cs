@@ -12,6 +12,9 @@ public sealed class AnimateText : MonoBehaviour
     [S] float minWait = 0.05f;
     [S] float maxWait = 0.1f;
 
+    [S] float spaceDelay = 0.1f;
+    [S] float commaDelay = 0.5f;
+
     Color colorVisible;
 
     void Awake()
@@ -57,14 +60,28 @@ public sealed class AnimateText : MonoBehaviour
 
             text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
 
-            AudioSource.PlayClipAtPoint(
-                clip: audioClip,
-                position: default
-            );
 
-            currentCharacter += 1;
+            var character = textInfo.characterInfo[currentCharacter].character;
+
+            if (character == ',' || character == ';')
+            {
+                yield return new WaitForSeconds(commaDelay);
+            }
+            else if (character == ' ')
+            {
+                yield return new WaitForSeconds(spaceDelay);
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(
+                    clip: audioClip,
+                    position: default
+                );
+            }
 
             yield return new WaitForSeconds(Random.Range(minWait, maxWait));
+
+            currentCharacter += 1;
         }
     }
 
