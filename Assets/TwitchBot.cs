@@ -29,6 +29,8 @@ public sealed class TwitchBot : MonoBehaviour
             channel: Secrets.TWITCH_USERNAME
         );
 
+        Client.OnError += (sender, args) => Debug.LogException(args.Exception);
+
         Client.OnConnected += (sender, args) =>
         {
             Debug.Log($"The bot {args.BotUsername} succesfully connected to Twitch.");
