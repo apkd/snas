@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using TwitchLib.Client.Models;
 using TwitchLib.Unity;
 using UnityEngine;
@@ -7,13 +10,17 @@ public sealed class TwitchBot : MonoBehaviour
 {
     [S] AnimateText text;
 
-    Client client;
+    [S] int textCount = 5;
+
+    public Client Client { get; private set; }
 
     void OnEnable()
     {
-        client = new Client();
+        Client = new Client();
 
-        client.Initialize(
+        var texts = new Queue<string>(capacity: textCount);
+
+        Client.Initialize(
             credentials: new ConnectionCredentials(
                 twitchUsername: Secrets.TWITCH_USERNAME,
                 twitchOAuth: Secrets.TWITCH_OAUTH_TOKEN
@@ -21,7 +28,7 @@ public sealed class TwitchBot : MonoBehaviour
             channel: Secrets.TWITCH_USERNAME
         );
 
-        client.OnConnected += (sender, args) =>
+        Client.OnConnected += (sender, args) =>
         {
             Debug.Log($"The bot {args.BotUsername} succesfully connected to Twitch.");
 
@@ -29,48 +36,43 @@ public sealed class TwitchBot : MonoBehaviour
                 Debug.Log($"The bot will now attempt to automatically join the channel provided when the Initialize method was called: {args.AutoJoinChannel}");
         };
 
-        client.OnJoinedChannel += (sender, args) =>
+        Client.OnJoinedChannel += (sender, args) =>
         {
             Debug.Log($"The bot {args.BotUsername} just joined the channel: {args.Channel}");
-            client.SendMessage(args.Channel, "I just joined the channel! PogChamp");
+            // client.SendMessage(args.Channel, "I just joined the channel! PogChamp");
         };
 
-        client.OnMessageReceived += (sender, args) =>
+        Client.OnMessageReceived += (sender, args) =>
         {
-            text.SetNewText(args.ChatMessage.Message);
-            Debug.Log($"Message received from {args.ChatMessage.Username}: {args.ChatMessage.Message}");
+            if (texts.Count >= textCount)
+                texts.Dequeue();
+
+            var message = args.ChatMessage.Message;
+
+            // strip html
+            message = Regex.Replace(
+                input: message,
+                pattern: "<.*?>",
+                replacement: ""
+            );
+
+            texts.Enqueue(message);
         };
 
-        client.OnChatCommandReceived += (sender, args) =>
-        {
-            if (args.Command.CommandText == "hello")
-            {
-                client.SendMessage(args.Command.ChatMessage.Channel, $"Hello {args.Command.ChatMessage.DisplayName}!");
-            }
-            else if (args.Command.CommandText == "about")
-            {
-                client.SendMessage(args.Command.ChatMessage.Channel, "I am a Twitch bot running on TwitchLib!");
-            }
-            else
-            {
-                client.SendMessage(args.Command.ChatMessage.Channel, $"Unknown chat command: {args.Command.CommandIdentifier}{args.Command.CommandText}");
-            }
-        };
-
-        client.Connect();
+        Client.Connect();
     }
 
     void OnDisable()
     {
-        client.Disconnect();
+        Client.Disconnect();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            client.SendMessage(
-                channel: Secrets.TWITCH_USERNAME, 
+            Client.SendMessage(
+                channel: Secrets.TWITCH_USERNAME,
                 message: "I pressed the space key within Unity."
             );
         }

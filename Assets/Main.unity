@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274f71539d9e3004588db9b662ed4477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _channelToConnectTo: awem
   text: {fileID: 2121699530}
+  textCount: 5
 --- !u!4 &278035213
 Transform:
   m_ObjectHideFlags: 0
@@ -521,7 +521,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "using System.Text.RegularExpressions;\r\n...\r\nconst string HTML_TAG_PATTERN
+    = \"<.*?>\";\r\n\r\nstatic string StripHTML (string inputString)\r\n{\r\n   return
+    Regex.Replace \r\n     (inputString, HTML_TAG_PATTERN, string.Empty);\r\n}"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -613,3 +615,29 @@ MonoBehaviour:
   audioClip: {fileID: 8300000, guid: 85f2396ed3cd86e4f8275099b7769d66, type: 3}
   minWait: 0.03
   maxWait: 0.08
+  spaceDelay: 0.1
+  commaDelay: 0.5
+  pitchShiftCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.95007324
+      inSlope: 0.0982666
+      outSlope: 0.0982666
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1.0483398
+      inSlope: 0.0982666
+      outSlope: 0.0982666
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

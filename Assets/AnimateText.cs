@@ -15,6 +15,8 @@ public sealed class AnimateText : MonoBehaviour
     [S] float spaceDelay = 0.1f;
     [S] float commaDelay = 0.5f;
 
+    [S] AnimationCurve pitchShiftCurve;
+
     Color colorVisible;
 
     void Awake()
@@ -63,7 +65,7 @@ public sealed class AnimateText : MonoBehaviour
 
             var character = textInfo.characterInfo[currentCharacter].character;
 
-            if (character == ',' || character == ';')
+            if (character == ',' || character == ';' || character == '\n')
             {
                 yield return new WaitForSeconds(commaDelay);
             }
@@ -73,10 +75,15 @@ public sealed class AnimateText : MonoBehaviour
             }
             else
             {
-                AudioSource.PlayClipAtPoint(
-                    clip: audioClip,
-                    position: default
-                );
+                var gameObject = new GameObject("One shot audio");
+                gameObject.hideFlags = HideFlags.HideAndDontSave;
+                var audioSource = (AudioSource) gameObject.AddComponent(typeof (AudioSource));
+                audioSource.clip = audioClip;
+                audioSource.spatialBlend = 1f;
+                audioSource.volume = 1f;
+                audioSource.Play();
+                audioSource.pitch = pitchShiftCurve.Evaluate(Random.value);
+                Destroy(gameObject, audioClip.length * (Time.timeScale < 0.1f ? 0.01f : Time.timeScale));
             }
 
             yield return new WaitForSeconds(Random.Range(minWait, maxWait));
@@ -85,7 +92,7 @@ public sealed class AnimateText : MonoBehaviour
         }
     }
 
-    public void SetNewText(string value)
+    public void AnimateNewText(string value)
     {
         text.SetText(value);
         StopAllCoroutines();
