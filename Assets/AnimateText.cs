@@ -73,7 +73,7 @@ public sealed class AnimateText : MonoBehaviour
             {
                 yield return new WaitForSeconds(spaceDelay);
             }
-            else
+            else if (currentCharacter % 2 == 0)
             {
                 PlayAudio(audioClip, pitchShiftCurve.Evaluate(Random.value));
             }
